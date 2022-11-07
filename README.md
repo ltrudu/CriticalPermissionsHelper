@@ -9,6 +9,7 @@ A wrapper to easily grant critical permissions to your application.
 
 Available permissions are:
 
+```txt
 #1. Access Notifications:	
 Controls permission to access Notifications on the device.			
 
@@ -26,6 +27,7 @@ Controls permission to access battery statistics for the device.
 
 #6. Manage External Storage:	
 Controls management of USB and/or SD card storage media attached to the device.	
+```
 
 This wrapper will use the EMDK with MX's AccessMgr feature to grant, deny or verify (WIP) critical permissions.
 
