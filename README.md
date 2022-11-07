@@ -5,7 +5,7 @@ https://github.com/ltrudu/CriticalPermissionsHelper-Sample
 
 
 ## Description
-A wrapper to easily grant critical permissions to your application.
+A wrapper to easily grant critical permissions to your application running on Zebra's Android devices with Android >= A11
 
 Available permissions are:
 
