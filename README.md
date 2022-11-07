@@ -1,51 +1,47 @@
-# DeviceIdentifiersWrapper
-
-
-
-
-## Change Log !!! 
-### 1. Change of REPOSITORY
-### 2. UPDATED FOR A11...
-### 3. Added a Sample repository running on <=A11
+# CriticalPermissionsHelper
 
 ## Sample Repository
-https://github.com/ltrudu/DeviceIdentifiersWrapper-Sample
-
-
-## Update for A11
-```text
-        Update your graddle distribution to >= 7.3.3
-        update your compileSdkVersion to 30
-        Update your Manifest.xml file to add the Query element (as explained in this description)
-        Add jitpack.io repository to the project build.graddle file : maven { url 'https://jitpack.io' }
-        Update the dependency in the graddle application file: implementation 'com.github.ltrudu:DeviceIdentifiersWrapper:0.3' or replace 0.3 with + to get the latest version automatically
-        Everything is explained in detail in this documentation.
-        You can use the sample as a copy/paste source.
-```
-
+https://github.com/ltrudu/CriticalPermissionsHelper-Sample
 
 
 ## Description
-A wrapper to easily retrieve the Serial Number and the IMEI number of an Android 10+ Zebra device.
+A wrapper to easily grant critical permissions to your application.
 
-How to access device identifiers such as serial number and IMEI on Zebra devices running Android 10
+Available permissions are:
+1	Access Notifications:	Controls permission to access Notifications on the device.			
 
-Android 10 limited access to device identifiers for all apps running on the platform regardless of their target API level.  As explained in the docs for [Android 10 privacy changes](https://developer.android.com/about/versions/10/privacy/changes) this includes the serial number, IMEI and some other identifiable information.
+2	Package Usage Stats:	Controls permission to access app usage statistics for the device.			
 
-**Zebra mobile computers running Android 10 are able to access both the serial number and IMEI** however applications need to be **explicitly granted the ability** to do so and use a proprietary API.
+3	System Alert Window:	Controls permission to use the System Alert Window, which allows one app to draw its window(s) over another.			
 
-To access to this API, you must first register your application using the AccessMgr MX's CSP.
+4	Get AppOps Stats:	Controls permission to access app operations statistics, used to determine the resources being used by apps on the 
 
-You can do it using StageNow, more details here: https://github.com/darryncampbell/EMDK-DeviceIdentifiers-Sample
+5	Battery Stats:	Controls permission to access battery statistics for the device.			
 
-Or you can use this wrapper that will automatically register your application if it is necessary.
+6	Manage External Storage:	Controls management of USB and/or SD card storage media attached to the device.	
+
+This wrapper will automatically register your application if it is necessary.
+It will use the EMDK and with MX's AccessMgr.
 
 ## Implementation
 To use this helper on Zebra Android devices running Android 10 or higher, first declare a new permission in your AndroidManifest.xml
+The EMDK permission is compulsary, the others are depending on your needs.
 
 ```xml
-<uses-permission android:name="com.zebra.provider.READ"/>
-<uses-permission android:name="com.symbol.emdk.permission.EMDK" />
+    <uses-permission android:name="com.symbol.emdk.permission.EMDK" />
+
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATIONS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.BATTERY_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.GET_APP_OPS_STATS"
+        tools:ignore="ProtectedPermissions" />
 ```
 
 Then add a query element to retrive the data (only necessary for Android builds >= 11)
@@ -56,25 +52,28 @@ Then add a query element to retrive the data (only necessary for Android builds 
     </queries>
 ```
 
-Then add the uses-library element to your application 
-```xml
-        <uses-library android:name="com.symbol.emdk" />
-```
-
 Sample AdroidManifest.xml:
 ```xml
-<?xml version="1.0" encoding="utf-8"?>
+?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zebra.emdk_deviceidentifiers_sample">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zebra.criticalpermissionshelpersample">
     <!--> TODO: Add these permissions to your manifest </-->
-    <uses-permission android:name="com.zebra.provider.READ"/>
     <uses-permission android:name="com.symbol.emdk.permission.EMDK" />
 
-    <!--> TODO: Add query element to your manifest </-->
-    <queries>
-        <provider android:authorities="oem_info" />
-    </queries>
-        
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATIONS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.BATTERY_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.GET_APP_OPS_STATS"
+        tools:ignore="ProtectedPermissions" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -82,8 +81,10 @@ Sample AdroidManifest.xml:
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--> TODO: Add uses-library com.symbol.emdk to your manifest </-->
         <uses-library android:name="com.symbol.emdk" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.zebra.criticalpermissionshelpersample.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -91,7 +92,8 @@ Sample AdroidManifest.xml:
             </intent-filter>
         </activity>
     </application>
- </manifest>
+
+</manifest>
 ```
 Update your project build.graddle file to add jitpack repository
 ```text
@@ -128,7 +130,7 @@ task clean(type: Delete) {
 
 Finally, add DeviceIdentifierWrapper dependency to your application build.graddle file:
 ```text
-        implementation 'com.github.ltrudu:DeviceIdentifiersWrapper:0.3'        
+        implementation 'com.github.ltrudu:CriticalPermissionsHelper:0.1'        
 ```
 
 Sample application build.graddle:
@@ -139,95 +141,70 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.github.ltrudu:DeviceIdentifiersWrapper:0.3'
+    implementation 'com.github.ltrudu:CriticalPermissionsHelper:0.1'
 }
 ```
 
-Now you can use the following snippet codes to retrieve IMEI number and Serial Number information.
+Now you can use the following snippet codes to grant permissions.
 
-
-Snippet code to use to retrieve the Serial Number of the device:
+The type of permissions you can grant:
 ```java
-     private void getSerialNumber(Context context)
-     {
-         DIHelper.getSerialNumber(context, new IDIResultCallbacks() {
-             @Override
-             public void onSuccess(String message) {
-                 // The message contains the serial number
-                 String mySerialNumber = message;
-             }
-
-             @Override
-             public void onError(String message) {
-                // An error occurred
-             }
-
-             @Override
-             public void onDebugStatus(String message) {
-                // You can use this method to get verbose information
-                // about what's happening behind the curtain             
-             }
-         });
-     }
+EPermissionType.ACCESS_NOTIFICATIONS
+EPermissionType.PACKAGE_USAGE_STATS
+EPermissionType.SYSTEM_ALERT_WINDOW
+EPermissionType.GET_APP_OPS_STATS
+EPermissionType.BATTERY_STATS
+EPermissionType.MANAGE_EXTERNAL_STORAGE
 ```
 
-
-Snippet code to use to retrieve the IMEI of the device:
+Snippet code to grant a permission:
 ```java
-    private void getIMEINumber(Context context)
-    {
-        DIHelper.getIMEINumber(context, new IDIResultCallbacks() {
-            @Override
-            public void onSuccess(String message) {
-                // We've got an EMEI number
-                String myIMEI = message;
-            }
+private void enablePermission(final Context aContext, final EPermissionType aPermissionType)
+{
+    // Enable permission
+    CriticalPermissionsHelper.grantPermission(aContext, aPermissionType, new IResultCallbacks() {
+        @Override
+        public void onSuccess(String message, String resultXML) {
+            Log.d(TAG, aPermissionType.toString() + " granted with success.");
+        }
 
-            @Override
-            public void onError(String message) {
-                // An error occurred
-            }
+        @Override
+        public void onError(String message, String resultXML) {
+            Log.d(TAG, "Error granting " + aPermissionType.toString() + " permission.\n" + message);
+        }
 
-            @Override
-            public void onDebugStatus(String message) {
-                // You can use this method to get verbose information
-                // about what's happening behind the curtain
-            }
-        });
-    }
+        @Override
+        public void onDebugStatus(String message) {
+            Log.d(TAG, "Debug Grant Permission " + aPermissionType.toString() + ": " + message);
+        }
+    });
+  }
 ```
 
-
-As the previous methods are asynchronous, if you need both information, it is strongly recommended to call the second request inside the onSuccess or onError of the first request. 
-
-Sample code if you need to get both device identifiers:
+Snippet code to disable a permission:
 ```java
-     private void getDevicesIdentifiers(Context context)
-     {
-        // We first ask for the SerialNumber
-         DIHelper.getSerialNumber(context, new IDIResultCallbacks() {
-             @Override
-             public void onSuccess(String message) {
-                 // The message contains the serial number
-                 String mySerialNumber = message;
-                 // We've got the serial number, now we can ask for the IMEINumber
-                 getIMEINumber(context);
-             }
+private void disablePermission(final Context aContext, final EPermissionType aPermissionType)
+{
+    // Enable permission
+    CriticalPermissionsHelper.denyPermission(aContext, aPermissionType, new IResultCallbacks() {
+        @Override
+        public void onSuccess(String message, String resultXML) {
+            Log.d(TAG, aPermissionType.toString() + " granted with success.");
+        }
 
-             @Override
-             public void onError(String message) {
-                // An error occured
-                // Do something here with the error message
-                // We had an error with the Serial Number, but it
-                // doesn't prevent us from calling the getIMEINumber method
-                getIMEINumber(context);
-             }
+        @Override
+        public void onError(String message, String resultXML) {
+            Log.d(TAG, "Error granting " + aPermissionType.toString() + " permission.\n" + message);
+        }
 
-             @Override
-             public void onDebugStatus(String message) {
-                // You can use this method to get verbose information
-                // about what's happening behind the curtain             
-             }
-         });
-     }
+        @Override
+        public void onDebugStatus(String message) {
+            Log.d(TAG, "Debug Grant Permission " + aPermissionType.toString() + ": " + message);
+        }
+    });
+  }
 ```
+
+The verifyPermission method is a work in progress.
+Check the sample for more information.
+
