@@ -16,6 +16,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 
 class ProfileManagerCommand extends CommandBase {
     protected class ErrorHolder
@@ -56,6 +57,9 @@ class ProfileManagerCommand extends CommandBase {
 
     // Status returned by the profile in case of success
     protected String msStatusXMLResponse = "";
+
+    // To prevent multiple initializations at the same time
+    private boolean bInitializing = false;
 
     // Status Listener implementation (ensure that we retrieve the profile manager asynchronously
     EMDKManager.StatusListener mStatusListener = new EMDKManager.StatusListener() {
@@ -116,6 +120,10 @@ class ProfileManagerCommand extends CommandBase {
 
     private void initializeEMDK()
     {
+        if(bInitializing)
+            return;
+        bInitializing = true;
+
         if(mEMDKManager == null)
         {
             EMDKResults results = null;
@@ -128,6 +136,7 @@ class ProfileManagerCommand extends CommandBase {
             {
                 logMessage("Error while requesting EMDKManager.\n" + e.getLocalizedMessage(), EMessageType.ERROR);
                 e.printStackTrace();
+                waitForEMDK();
                 return;
             }
 
@@ -136,6 +145,7 @@ class ProfileManagerCommand extends CommandBase {
                 logMessage("EMDKManager request command issued with success", EMessageType.DEBUG);
             }else {
                 logMessage("EMDKManager request command error", EMessageType.ERROR);
+                waitForEMDK();
             }
         }
         else
@@ -143,6 +153,37 @@ class ProfileManagerCommand extends CommandBase {
             onEMDKManagerRetrieved(mEMDKManager);
         }
     }
+
+    private void waitForEMDK()
+    {
+        logMessage("EMDKManager error, this could be a BOOT_COMPLETED issue.", EMessageType.DEBUG);
+        logMessage("Starting watcher thread to wait for EMDK initialization.", EMessageType.DEBUG);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long startDate = new Date().getTime();
+                long delta = 0;
+                while(mEMDKManager == null || delta < CriticalPermissionsHelper.MAX_EMDK_TIMEOUT_IN_MS ) {
+                    // Try to initialize EMDK
+                    logMessage("Calling EMDK Initialization method", EMessageType.DEBUG);
+                    initializeEMDK();
+                    try {
+                        logMessage("Waiting " + CriticalPermissionsHelper.WAIT_PERIOD_BEFORE_RETRY_EMDK_RETRIEVAL_IN_MS + " milliseconds before retrying.", EMessageType.DEBUG);
+                        Thread.sleep(CriticalPermissionsHelper.WAIT_PERIOD_BEFORE_RETRY_EMDK_RETRIEVAL_IN_MS);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    delta = new Date().getTime() - startDate;
+                    logMessage("Delta in ms since first EMDK retrieval try: " + delta + "ms stops at " + CriticalPermissionsHelper.MAX_EMDK_TIMEOUT_IN_MS + "ms", EMessageType.DEBUG);
+                }
+                logMessage("Could not retrieve EMDK Manager after waiting " + CriticalPermissionsHelper.WAIT_PERIOD_BEFORE_RETRY_EMDK_RETRIEVAL_IN_MS/CriticalPermissionsHelper.SEC_IN_MS + " seconds. Please contact your administrator or check logcat for any EMDK related error.", EMessageType.ERROR);
+                bInitializing = false;
+            }
+        });
+        t.setPriority(Thread.MIN_PRIORITY);
+        t.start();
+    }
+
 
     private void onEMDKManagerRetrieved(EMDKManager emdkManager)
     {
@@ -188,6 +229,7 @@ class ProfileManagerCommand extends CommandBase {
     private void onProfileManagerInitialized(ProfileManager profileManager)
     {
         mProfileManager = profileManager;
+        bInitializing = false;
         logMessage("Profile Manager retrieved.", EMessageType.DEBUG);
         processMXContent();
     }
