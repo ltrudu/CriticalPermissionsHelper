@@ -21,8 +21,7 @@ Available permissions are:
 
 6.Manage External Storage:	Controls management of USB and/or SD card storage media attached to the device.	
 
-This wrapper will automatically register your application if it is necessary.
-It will use the EMDK and with MX's AccessMgr.
+This wrapper will use the EMDK with MX's AccessMgr feature to grant, deny or verify (WIP) critical permissions.
 
 ## Implementation
 To use this helper on Zebra Android devices running Android 10 or higher, first declare a new permission in your AndroidManifest.xml
