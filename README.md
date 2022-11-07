@@ -128,7 +128,7 @@ task clean(type: Delete) {
 }       
 ```
 
-Finally, add DeviceIdentifierWrapper dependency to your application build.graddle file:
+Finally, add CriticalPermissionsHelper dependency to your application build.graddle file:
 ```text
         implementation 'com.github.ltrudu:CriticalPermissionsHelper:0.1'        
 ```
