@@ -8,6 +8,7 @@ https://github.com/ltrudu/CriticalPermissionsHelper-Sample
 A wrapper to easily grant critical permissions to your application.
 
 Available permissions are:
+
 1	Access Notifications:	Controls permission to access Notifications on the device.			
 
 2	Package Usage Stats:	Controls permission to access app usage statistics for the device.			
