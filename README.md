@@ -44,14 +44,6 @@ The EMDK permission is compulsary, the others are depending on your needs.
         tools:ignore="ProtectedPermissions" />
 ```
 
-Then add a query element to retrive the data (only necessary for Android builds >= 11)
-
-```xml
-    <queries>
-        <provider android:authorities="oem_info" />
-    </queries>
-```
-
 Sample AdroidManifest.xml:
 ```xml
 ?xml version="1.0" encoding="utf-8"?>
