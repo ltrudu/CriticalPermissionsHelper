@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zebra.criticalpermissionshelper">
+  <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER" />
+  <uses-permission android:name="com.zebra.provider.READ"/>
+  <queries>
+    <package android:name="com.symbol.emdk.emdkservice" />
+  </queries>
+</manifest>
