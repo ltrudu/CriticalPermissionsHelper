@@ -1,5 +1,13 @@
 # CriticalPermissionsHelper
 
+##Easy grant critical permissions to your Zebra's device
+
+Forget about AccessMgr, StageNow, EMDK, certificates, application signature... complexity....
+
+Just grant a permission on your Zebra device in one method call (see at the end of this document).
+
+Have fun with Zebra's devices :)
+
 ## Sample Repository
 https://github.com/ltrudu/CriticalPermissionsHelper-Sample
 
