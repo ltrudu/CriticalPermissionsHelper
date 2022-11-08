@@ -1,6 +1,6 @@
 # CriticalPermissionsHelper
 
-##Easy grant critical permissions to your Zebra's device
+## Easy grant critical permissions to your Zebra's device
 
 Forget about AccessMgr, StageNow, EMDK, certificates, application signature... complexity....
 
