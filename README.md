@@ -4,7 +4,15 @@
 
 Forget about AccessMgr, StageNow, EMDK, certificates, application signature... complexity....
 
-Just grant a permission on your Zebra device in one method call (see at the end of this document).
+Just grant some critical permissions on your Zebra device in one method call (see at the end of this document).
+
+Includes: 
+android.permission.ACCESS_NOTIFICATIONS, 
+android.permission.PACKAGE_USAGE_STATS, 
+android.permission.SYSTEM_ALERT_WINDOW, 
+android.permission.BATTERY_STATS, 
+android.permission.MANAGE_EXTERNAL_STORAGE, 
+android.permission.GET_APP_OPS_STATS
 
 Have fun with Zebra's devices :)
 
