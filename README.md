@@ -30,7 +30,7 @@ Controls permission to access app usage statistics for the device.
 Controls permission to use the System Alert Window, which allows one app to draw its window(s) over another.			
 
 #4. Get AppOps Stats:	
-Controls permission to access app operations statistics, used to determine the resources being used by apps on the 
+Controls permission to access app operations statistics, used to determine the resources being used by apps on the device.
 
 #5. Battery Stats:	
 Controls permission to access battery statistics for the device.			
