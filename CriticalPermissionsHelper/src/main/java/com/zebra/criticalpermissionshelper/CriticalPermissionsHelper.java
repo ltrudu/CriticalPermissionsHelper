@@ -3,7 +3,6 @@ package com.zebra.criticalpermissionshelper;
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.UriPermission;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -12,7 +11,6 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 
 import java.util.Base64;
-import java.util.List;
 
 public class CriticalPermissionsHelper {
 
@@ -93,28 +91,6 @@ public class CriticalPermissionsHelper {
                 callbackInterface.onDebugStatus(message);
             }
         });
-    }
-
-    public static void grantFileOrFolderAcessPermission(final Context context, final Uri uriToAllow, final IResultCallbacks callbackInterface)
-    {
-        new GrantContentPermission().execute(context, uriToAllow, callbackInterface);
-    }
-
-    public static boolean hasAccessPermissions(final Context context, final Uri uriToCheck)
-    {
-        boolean hasAccessToSpecialFolder = false;
-        List<UriPermission> uriPermissions =
-                context.getContentResolver().getPersistedUriPermissions();
-
-        if (uriPermissions != null && uriPermissions.size() > 0) {
-            for (UriPermission p : uriPermissions) {
-                if (p.isReadPermission() && p.equals(uriToCheck)) {
-                    hasAccessToSpecialFolder = true;
-                    break;
-                }
-            }
-        }
-        return hasAccessToSpecialFolder;
     }
 
     private static void executeAccessMgrPermissionCommand(Context context, EPermissionAccessAction permissionAccessAction, EPermissionType permissionType, IResultCallbacks callbackInterface) {
