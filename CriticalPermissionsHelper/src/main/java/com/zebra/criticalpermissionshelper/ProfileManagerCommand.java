@@ -67,7 +67,18 @@ class ProfileManagerCommand extends CommandBase {
         public void onStatus(EMDKManager.StatusData statusData, EMDKBase emdkBase) {
             if(statusData.getResult() == EMDKResults.STATUS_CODE.SUCCESS)
             {
-                onProfileManagerInitialized((ProfileManager)emdkBase);
+                ProfileManager profileManager = (ProfileManager)emdkBase;
+                if(profileManager != null)
+                    onProfileManagerInitialized(profileManager);
+                else
+                {
+                    logMessage("Casting error when retrieving ProfileManager.", EMessageType.ERROR);
+                    profileManager = (ProfileManager) mEMDKManager.getInstance(EMDKManager.FEATURE_TYPE.PROFILE);
+                    if(profileManager != null) {
+                        logMessage("Profile manager retrieved synchronously with success", EMessageType.VERBOSE);
+                        onProfileManagerInitialized(profileManager);
+                    }
+                }
             }
             else
             {
@@ -266,6 +277,18 @@ class ProfileManagerCommand extends CommandBase {
     {
         String[] params = new String[1];
         params[0] = msProfileData;
+
+        if(mProfileManager == null)
+        {
+            String errorMessage = "";
+            for(ErrorHolder error : mErrors)
+            {
+                errorMessage += "ProcessMXContent: logMessage == null";
+            }
+            logMessage(errorMessage, EMessageType.ERROR);
+            onProfileExecutedError(errorMessage);
+            return;
+        }
 
         EMDKResults results = mProfileManager.processProfile(msProfileName, ProfileManager.PROFILE_FLAG.SET, params);
 
