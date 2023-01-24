@@ -280,14 +280,26 @@ class ProfileManagerCommand extends CommandBase {
 
         if(mProfileManager == null)
         {
-            String errorMessage = "";
-            for(ErrorHolder error : mErrors)
-            {
-                errorMessage += "ProcessMXContent: logMessage == null";
+            logMessage("ProcessMXContent : Error : ProfileManager == null", EMessageType.ERROR);
+            if(mEMDKManager != null) {
+                logMessage("ProcessMXContent : Trying to retrieve profileManager synchronously", EMessageType.ERROR);
+                ProfileManager profileManager = (ProfileManager) mEMDKManager.getInstance(EMDKManager.FEATURE_TYPE.PROFILE);
+                if (profileManager != null) {
+                        logMessage("ProcessMXContent, ProfileManager retrieved syncrhonously.",EMessageType.VERBOSE);
+                        mProfileManager = profileManager;
+                }
+                else
+                {
+                    logMessage("ProcessMXContent : Error : Could not retrieve ProfileManager syncrhonously.",EMessageType.VERBOSE);
+                    onProfileExecutedError("ProcessMXContent : Error : Could not retrieve ProfileManager syncrhonously.");
+                    return;
+                }
             }
-            logMessage(errorMessage, EMessageType.ERROR);
-            onProfileExecutedError(errorMessage);
-            return;
+            else {
+                logMessage("ProcessMXContent : Error : mEMDKManager == null", EMessageType.ERROR);
+                onProfileExecutedError("ProcessMXContent : Error : mEMDKManager == null");
+                return;
+            }
         }
 
         EMDKResults results = mProfileManager.processProfile(msProfileName, ProfileManager.PROFILE_FLAG.SET, params);
