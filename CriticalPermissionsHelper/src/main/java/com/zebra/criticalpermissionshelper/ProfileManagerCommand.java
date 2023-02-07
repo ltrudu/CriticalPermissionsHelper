@@ -67,7 +67,18 @@ class ProfileManagerCommand extends CommandBase {
         public void onStatus(EMDKManager.StatusData statusData, EMDKBase emdkBase) {
             if(statusData.getResult() == EMDKResults.STATUS_CODE.SUCCESS)
             {
-                onProfileManagerInitialized((ProfileManager)emdkBase);
+                ProfileManager profileManager = (ProfileManager)emdkBase;
+                if(profileManager != null)
+                    onProfileManagerInitialized(profileManager);
+                else
+                {
+                    logMessage("Casting error when retrieving ProfileManager.", EMessageType.ERROR);
+                    profileManager = (ProfileManager) mEMDKManager.getInstance(EMDKManager.FEATURE_TYPE.PROFILE);
+                    if(profileManager != null) {
+                        logMessage("Profile manager retrieved synchronously with success", EMessageType.VERBOSE);
+                        onProfileManagerInitialized(profileManager);
+                    }
+                }
             }
             else
             {
@@ -266,6 +277,30 @@ class ProfileManagerCommand extends CommandBase {
     {
         String[] params = new String[1];
         params[0] = msProfileData;
+
+        if(mProfileManager == null)
+        {
+            logMessage("ProcessMXContent : Error : ProfileManager == null", EMessageType.ERROR);
+            if(mEMDKManager != null) {
+                logMessage("ProcessMXContent : Trying to retrieve profileManager synchronously", EMessageType.ERROR);
+                ProfileManager profileManager = (ProfileManager) mEMDKManager.getInstance(EMDKManager.FEATURE_TYPE.PROFILE);
+                if (profileManager != null) {
+                        logMessage("ProcessMXContent, ProfileManager retrieved syncrhonously.",EMessageType.VERBOSE);
+                        mProfileManager = profileManager;
+                }
+                else
+                {
+                    logMessage("ProcessMXContent : Error : Could not retrieve ProfileManager syncrhonously.",EMessageType.VERBOSE);
+                    onProfileExecutedError("ProcessMXContent : Error : Could not retrieve ProfileManager syncrhonously.");
+                    return;
+                }
+            }
+            else {
+                logMessage("ProcessMXContent : Error : mEMDKManager == null", EMessageType.ERROR);
+                onProfileExecutedError("ProcessMXContent : Error : mEMDKManager == null");
+                return;
+            }
+        }
 
         EMDKResults results = mProfileManager.processProfile(msProfileName, ProfileManager.PROFILE_FLAG.SET, params);
 
