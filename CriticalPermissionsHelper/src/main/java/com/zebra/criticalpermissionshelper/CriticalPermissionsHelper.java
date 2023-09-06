@@ -45,13 +45,55 @@ public class CriticalPermissionsHelper {
         }
     };
 
-    // MX11.4 Permissions
+    // MX10.0 Permissions
     // android.permission.ACCESS_NOTIFICATIONS
     // android.permission.PACKAGE_USAGE_STATS
     // android.permission.SYSTEM_ALERT_WINDOW
     // android.permission.GET_APP_OPS_STATS
     // android.permission.BATTERY_STATS
+
+    // MX10.4 Permissions
     // android.permission.MANAGE_EXTERNAL_STORAGE
+
+    // MX11.5 Permissions
+    // android.permission.BIND_NOTIFICATION_LISTENER
+
+    // MX11.9 Permissions
+    // android.permission.READ_LOGS
+
+    // MX13.1 Permissions
+    // All dangerous permissions
+    // List of Dangerous permissions in A13 (2023/07/01):
+    //READ_CALENDAR
+    //WRITE_CALENDAR
+    //CAMERA
+    //READ_CONTACTS
+    //WRITE_CONTACTS
+    //GET_ACCOUNTS
+    //ACCESS_FINE_LOCATION
+    //ACCESS_COARSE_LOCATION
+    //RECORD_AUDIO
+    //READ_PHONE_STATE
+    //READ_PHONE_NUMBERS
+    //CALL_PHONE
+    //ANSWER_PHONE_CALLS
+    //READ_CALL_LOG
+    //WRITE_CALL_LOG
+    //ADD_VOICEMAIL
+    //USE_SIP
+    //PROCESS_OUTGOING_CALLS
+    //BODY_SENSORS
+    //SEND_SMS
+    //RECEIVE_SMS
+    //READ_SMS
+    //RECEIVE_WAP_PUSH
+    //RECEIVE_MMS
+    //READ_EXTERNAL_STORAGE
+    //WRITE_EXTERNAL_STORAGE
+    //ACCESS_MEDIA_LOCATION
+    //ACCEPT_HANDOVER
+    //ACCESS_BACKGROUND_LOCATION
+    //ACTIVITY_RECOGNITION
 
     public static void grantPermission(Context context, EPermissionType permissionType, IResultCallbacks callbackInterface)
     {
