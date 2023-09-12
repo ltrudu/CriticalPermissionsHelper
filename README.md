@@ -160,7 +160,7 @@ task clean(type: Delete) {
 
 Finally, add CriticalPermissionsHelper dependency to your application build.graddle file:
 ```text
-        implementation 'com.github.ltrudu:CriticalPermissionsHelper:0.1'        
+        implementation 'com.github.ltrudu:CriticalPermissionsHelper:+'        
 ```
 
 Sample application build.graddle:
@@ -171,7 +171,7 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.github.ltrudu:CriticalPermissionsHelper:0.1'
+    implementation 'com.github.ltrudu:CriticalPermissionsHelper:+'
 }
 ```
 
