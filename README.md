@@ -6,7 +6,7 @@ Forget about AccessMgr, StageNow, EMDK, certificates, application signature... c
 
 Just grant some critical permissions on your Zebra device in one method call (see at the end of this document).
 
-Includes: ACCESS_NOTIFICATIONS, PACKAGE_USAGE_STATS, SYSTEM_ALERT_WINDOW, BATTERY_STATS, MANAGE_EXTERNAL_STORAGE, GET_APP_OPS_STATS
+Includes: ACCESS_NOTIFICATIONS, PACKAGE_USAGE_STATS, SYSTEM_ALERT_WINDOW, BATTERY_STATS, MANAGE_EXTERNAL_STORAGE, GET_APP_OPS_STATS, ALL_DANGEROUS_PERMISSIONS
 
 Have fun with Zebra's devices :)
 
@@ -37,6 +37,11 @@ Controls permission to access battery statistics for the device.
 
 #6. Manage External Storage:	
 Controls management of USB and/or SD card storage media attached to the device.	
+
+#7. All Dangerous Permissions
+Grants all permissions that requires runtime permission model
+To know which permissions are listed as Dangerous, execute the following ADB command:
+adb shell pm list permissions -g -d
 ```
 
 This wrapper will use the EMDK with MX's AccessMgr feature to grant, deny or verify (WIP) critical permissions.
@@ -60,6 +65,15 @@ The EMDK permission is compulsary, the others are depending on your needs.
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.GET_APP_OPS_STATS"
         tools:ignore="ProtectedPermissions" />
+		
+	<!-- Or any dangerous permission, for example: -->
+   <uses-permission android:name="permission:android.permission.ACCESS_FINE_LOCATION"
+        tools:ignore="ProtectedPermissions" />
+   <uses-permission android:name="permission:android.permission.BLUETOOTH_CONNECT"
+        tools:ignore="ProtectedPermissions" />   
+		<uses-permission android:name="  permission:android.permission.BLUETOOTH_SCAN"
+        tools:ignore="ProtectedPermissions" />
+	  
 ```
 
 Sample AdroidManifest.xml:
@@ -82,6 +96,12 @@ Sample AdroidManifest.xml:
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.GET_APP_OPS_STATS"
+        tools:ignore="ProtectedPermissions" />
+	<uses-permission android:name="permission:android.permission.ACCESS_FINE_LOCATION"
+        tools:ignore="ProtectedPermissions" />
+	<uses-permission android:name="permission:android.permission.BLUETOOTH_CONNECT"
+        tools:ignore="ProtectedPermissions" />   
+	<uses-permission android:name="  permission:android.permission.BLUETOOTH_SCAN"
         tools:ignore="ProtectedPermissions" />
 
     <application
@@ -165,6 +185,7 @@ EPermissionType.SYSTEM_ALERT_WINDOW
 EPermissionType.GET_APP_OPS_STATS
 EPermissionType.BATTERY_STATS
 EPermissionType.MANAGE_EXTERNAL_STORAGE
+EPermissionType.ALL_DANGEROUS_PERMISSIONS
 ```
 
 Snippet code to grant a permission:

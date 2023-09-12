@@ -10,7 +10,7 @@ public enum EPermissionType
     MANAGE_EXTERNAL_STORAGE(    "android.permission.MANAGE_EXTERNAL_STORAGE"),
     BIND_NOTIFICATION_LISTENER(    "android.permission.BIND_NOTIFICATION_LISTENER"),
     READ_LOGS(    "android.permission.READ_LOGS"),
-    ALL_DANGEROUS( "ALL_DANGEROUS_PERMISSIONS");
+    ALL_DANGEROUS_PERMISSIONS( "ALL_DANGEROUS_PERMISSIONS");
 
     String stringContent = "";
     EPermissionType(String stringContent)

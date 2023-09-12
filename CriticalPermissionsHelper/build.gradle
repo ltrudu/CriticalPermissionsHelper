@@ -4,7 +4,7 @@ plugins {
 ext {
     PUBLISH_GROUP_ID = 'com.zebra.criticalpermissionshelper'
     PUBLISH_ARTIFACT_ID = 'criticalpermissionshelper'
-    PUBLISH_VERSION = '0.2'
+    PUBLISH_VERSION = '0.6'
 }
 
 android {
@@ -13,8 +13,8 @@ android {
     defaultConfig {
         minSdkVersion 30
         targetSdkVersion 32
-        versionCode 5
-        versionName "0.5"
+        versionCode 6
+        versionName "0.6"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
