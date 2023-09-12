@@ -38,7 +38,7 @@ Controls permission to access battery statistics for the device.
 #6. Manage External Storage:	
 Controls management of USB and/or SD card storage media attached to the device.	
 
-#7. All Dangerous Permissions
+#7. All Dangerous Permissions (MX >= 13.1, StageNow >= 5.11.0)
 Grants all permissions that requires runtime permission model
 To know which permissions are listed as Dangerous, execute the following ADB command:
 adb shell pm list permissions -g -d
