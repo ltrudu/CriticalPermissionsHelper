@@ -23,7 +23,7 @@ public enum EPermissionType
         return stringContent;
     }
 
-    public EPermissionType fromString(String permissionType)
+    public static EPermissionType fromString(String permissionType)
     {
         switch(permissionType)
         {

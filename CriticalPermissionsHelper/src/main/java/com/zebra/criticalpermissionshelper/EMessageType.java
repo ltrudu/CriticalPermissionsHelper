@@ -14,7 +14,7 @@ enum EMessageType {
         return stringContent;
     }
 
-    public EMessageType fromString(String messageType)
+    public static EMessageType fromString(String messageType)
     {
         switch(messageType) {
             case "VERBOSE":

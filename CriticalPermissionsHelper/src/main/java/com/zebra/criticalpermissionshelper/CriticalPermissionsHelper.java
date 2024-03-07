@@ -44,7 +44,7 @@ public class CriticalPermissionsHelper {
             return stringContent;
         }
 
-        public EPermissionAccessAction fromString(String permissionAction)
+        public static EPermissionAccessAction fromString(String permissionAction)
         {
             switch(permissionAction)
             {
