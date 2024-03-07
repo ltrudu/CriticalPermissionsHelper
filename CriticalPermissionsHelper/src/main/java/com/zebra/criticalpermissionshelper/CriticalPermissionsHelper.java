@@ -43,6 +43,23 @@ public class CriticalPermissionsHelper {
         public String toString() {
             return stringContent;
         }
+
+        public EPermissionAccessAction fromString(String permissionAction)
+        {
+            switch(permissionAction)
+            {
+                case "1":
+                    return GRANT_PERMISSION;
+                case "2":
+                    return DENY_PERMISSION;
+                case "3":
+                    return ALLOW_USER_TO_CHOOSE;
+                case "4":
+                    return VERIFY;
+                default:
+                    return null;
+            }
+        }
     };
 
     // MX10.0 Permissions
