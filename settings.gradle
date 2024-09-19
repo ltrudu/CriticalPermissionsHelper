@@ -4,7 +4,9 @@ pluginManagement {
         google()
         mavenCentral()
         jcenter()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url = "https://zebratech.jfrog.io/artifactory/EMDK-Android/"
+        }
     }
 }
 dependencyResolutionManagement {
@@ -13,7 +15,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url = "https://zebratech.jfrog.io/artifactory/EMDK-Android/"
+        }
     }
 }
 
