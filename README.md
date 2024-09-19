@@ -1,11 +1,10 @@
 *Please be aware that this library / application / sample is provided as a community project without any guarantee of support*
 =========================================================
+# CriticalPermissionsHelper
 
 [![](https://jitpack.io/v/ltrudu/CriticalPermissionsHelper.svg)](https://jitpack.io/#ltrudu/CriticalPermissionsHelper)
 [![](https://jitpack.io/v/ltrudu/CriticalPermissionsHelper/month.svg)](https://jitpack.io/#ltrudu/CriticalPermissionsHelper)
 
-
-# CriticalPermissionsHelper
 
 ## Easy grant critical permissions to your Zebra's device
 
