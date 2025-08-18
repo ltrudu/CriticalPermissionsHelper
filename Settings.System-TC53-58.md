@@ -1,7 +1,7 @@
 #List of Settings that can be read or written with the WRITE_SETTINGS permission on TC53/58 Android 14 (BSP: 14-28-03.00-UG-U60-STD-ATH-04)
 
-| Description     | Data Type                            | Default Value                                               |
-| --------------- | ------------------------------------ | ----------------------------------------------------------- |
+| Category        | Setting Key	                         | Description                                                 | Data Type | Default Value |
+| --------------- | ------------------------------------ | ----------------------------------------------------------- | | |
 | Display         | `accelerometer_rotation`             | Auto-rotate screen based on orientation                     | int | 1 (enabled) |
 |                 | `dim_screen`                         | Dim screen in battery saver mode (deprecated in later APIs) | int | 1 (enabled) |
 |                 | `display_default_density_value`      | Default screen pixel density (dpi)                          | int | Device-specific (e.g., 480) |
@@ -68,3 +68,4 @@
 | Flags           | `alarm_alert_set`                    | Alarm sound configured flag                                 | int | 1 (configured) |
 |                 | `notification_sound_set`             | Notification sound configured flag                          | int | 1 (configured) |
 |                 | `ringtone_set`                       | Ringtone configured flag                                    | int | 1 (configured) |
+| --------------- | ------------------------------------ | ----------------------------------------------------------- | | |
