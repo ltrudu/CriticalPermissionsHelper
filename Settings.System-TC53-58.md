@@ -1,4 +1,6 @@
-#List of Settings that can be read or written with the WRITE_SETTINGS permission on TC53/58 Android 14 (BSP: 14-28-03.00-UG-U60-STD-ATH-04)
+*List of Settings that can be read or written with the WRITE_SETTINGS permission on TC53/58*
+=========================================================
+# BSP: Android 14 (BSP: 14-28-03.00-UG-U60-STD-ATH-04)
 
 | Category        | Setting Key                          | Description                                                 | Data Type | Default Value                |
 | --------------- | ------------------------------------ | ----------------------------------------------------------- | --------- | ---------------------------- |
