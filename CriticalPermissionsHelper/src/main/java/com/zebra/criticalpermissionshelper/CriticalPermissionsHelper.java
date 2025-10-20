@@ -117,6 +117,11 @@ public class CriticalPermissionsHelper {
         executeAccessMgrPermissionCommand(context, EPermissionAccessAction.GRANT_PERMISSION, permissionType, callbackInterface);
     }
 
+    public static void grantPermissionWithClassName(Context context, EPermissionType permissionType, String applicationClassName, IResultCallbacks callbacksInterface)
+    {
+        executeAccessMgrPermissionCommand(context, EPermissionAccessAction.GRANT_PERMISSION, permissionType, applicationClassName, callbacksInterface);
+    }
+
     public static void denyPermission(Context context, EPermissionType permissionType, IResultCallbacks callbackInterface)
     {
         executeAccessMgrPermissionCommand(context, EPermissionAccessAction.DENY_PERMISSION, permissionType, callbackInterface);
@@ -152,7 +157,19 @@ public class CriticalPermissionsHelper {
         });
     }
 
-    private static void executeAccessMgrPermissionCommand(Context context, EPermissionAccessAction permissionAccessAction, EPermissionType permissionType, IResultCallbacks callbackInterface) {
+    private static void executeAccessMgrPermissionCommand(Context context, EPermissionAccessAction permissionAccessAction, EPermissionType permissionType, IResultCallbacks callbackInterface)
+    {
+        if(permissionType == EPermissionType.ACCESSIBILITY_SERVICE)
+        {
+            if (callbackInterface != null) {
+                callbackInterface.onError("Error : ACCESSIBILITY SERVICE permission needs a applicationClassName, use the grantPermissionWithClassName instead.","");
+                return;
+            }
+        }
+        executeAccessMgrPermissionCommand(context, permissionAccessAction, permissionType, null, callbackInterface);
+    }
+
+        private static void executeAccessMgrPermissionCommand(Context context, EPermissionAccessAction permissionAccessAction, EPermissionType permissionType, String applicationClassName, IResultCallbacks callbackInterface) {
         String profileName = "AccessMgr-1";
         String profileData = "";
         try {
@@ -189,16 +206,17 @@ public class CriticalPermissionsHelper {
             String encoded = Base64.getEncoder().encodeToString(rawCert);
 
             profileData =
-                    "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-                            "<characteristic type=\"Profile\">" +
-                            "<parm name=\"ProfileName\" value=\"" + profileName + "\"/>" +
-                            "<characteristic type=\"AccessMgr\" version=\"11.3\">" +
-                            "<parm name=\"PermissionAccessAction\" value=\"" + permissionAccessAction.toString() + "\" />" +
-                            "<parm name=\"PermissionAccessPackageName\" value=\"" + context.getPackageName() + "\" />" +
+                    "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                            "<characteristic type=\"Profile\">\n" +
+                            "<parm name=\"ProfileName\" value=\"" + profileName + "\"/>\n" +
+                            "<characteristic type=\"AccessMgr\" version=\"11.3\">\n" +
+                            "<parm name=\"PermissionAccessAction\" value=\"" + permissionAccessAction.toString() + "\" />\n" +
+                            "<parm name=\"PermissionAccessPackageName\" value=\"" + context.getPackageName() + "\" />\n" +
+                            ((applicationClassName != null && applicationClassName.isEmpty() == false) ? "<parm name=\"ApplicationClassName\" value=\""+ applicationClassName +"\" />" : "") +
                             "<parm name=\"PermissionAccessPermissionName\" value=\"" + permissionType.toString() + "\" />\n" +
-                            "<parm name=\"PermissionAccessSignature\" value=\"" + encoded + "\" />" +
-                            "</characteristic>" +
-                            "</characteristic>";
+                            "<parm name=\"PermissionAccessSignature\" value=\"" + encoded + "\" />\n" +
+                            "</characteristic>\n" +
+                            "</characteristic>\n";
             ProfileManagerCommand profileManagerCommand = new ProfileManagerCommand(context);
             profileManagerCommand.execute(profileData, profileName, callbackInterface);
             //}
