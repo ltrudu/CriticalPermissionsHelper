@@ -10,7 +10,11 @@ public enum EPermissionType
     MANAGE_EXTERNAL_STORAGE(        "android.permission.MANAGE_EXTERNAL_STORAGE"        ),
     BIND_NOTIFICATION_LISTENER(     "android.permission.BIND_NOTIFICATION_LISTENER"     ),
     READ_LOGS(                      "android.permission.READ_LOGS"                      ),
-    ALL_DANGEROUS_PERMISSIONS(      "ALL_DANGEROUS_PERMISSIONS"                         );
+    ALL_DANGEROUS_PERMISSIONS(      "ALL_DANGEROUS_PERMISSIONS"                         ),
+    ACCESS_RX_LOGGER(               "com.zebra.permission.ACCESS_RXLOGGER"              ),
+    SCHEDULE_EXACT_ALARM(           "android.permission.SCHEDULE_EXACT_ALARM"           ),
+    WRITE_SETTINGS(                 "android.permission.WRITE_SETTINGS"                 ),
+    ACCESSIBILITY_SERVICE(          "ACCESSIBILITY_SERVICE_ACCESS"                      );
 
     String stringContent = "";
     EPermissionType(String stringContent)
@@ -45,6 +49,14 @@ public enum EPermissionType
                 return READ_LOGS;
             case "ALL_DANGEROUS_PERMISSIONS":
                 return ALL_DANGEROUS_PERMISSIONS;
+            case "com.zebra.permission.ACCESS_RXLOGGER":
+                return ACCESS_RX_LOGGER;
+            case "android.permission.SCHEDULE_EXACT_ALARM":
+                return SCHEDULE_EXACT_ALARM;
+            case "android.permission.WRITE_SETTINGS":
+                return WRITE_SETTINGS;
+            case "ACCESSIBILITY_SERVICE_ACCESS":
+                return ACCESSIBILITY_SERVICE;
             default:
                 return null;
         }

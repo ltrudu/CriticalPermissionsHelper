@@ -107,7 +107,7 @@ class ProfileManagerCommand extends CommandBase {
     protected ProfileManagerCommand(Context aContext) {
         super(aContext);
         mSettings = new CommandBaseSettings(){{
-           mTimeOutMS = 20000;
+           mTimeOutMS = 60000;
            mEnableTimeOutMechanism = true;
            mCommandId = "DWProfileManagerCommand";
         }};
