@@ -12,7 +12,7 @@ Forget about AccessMgr, StageNow, EMDK, certificates, application signature... c
 
 Just grant some critical permissions on your Zebra device in one method call (see at the end of this document).
 
-Includes: ACCESS_NOTIFICATIONS, PACKAGE_USAGE_STATS, SYSTEM_ALERT_WINDOW, BATTERY_STATS, MANAGE_EXTERNAL_STORAGE, GET_APP_OPS_STATS, ALL_DANGEROUS_PERMISSIONS
+Includes: ACCESS_NOTIFICATIONS, PACKAGE_USAGE_STATS, SYSTEM_ALERT_WINDOW, BATTERY_STATS, MANAGE_EXTERNAL_STORAGE, GET_APP_OPS_STATS, ALL_DANGEROUS_PERMISSIONS, WRITE_SETTINGS, ACCESSIBILITY_SERVICE
 
 Have fun with Zebra's devices :)
 
@@ -48,6 +48,19 @@ Controls management of USB and/or SD card storage media attached to the device.
 Grants all permissions that requires runtime permission model
 To know which permissions are listed as Dangerous, execute the following ADB command:
 adb shell pm list permissions -g -d
+
+#8. Access RX Logger
+Controls access to Zebra RxLogger diagnostics utility usage on the device.
+
+#9. Schedule Exact Alarm
+Allows a user-facing app use Android exact alarm APIs to trigger an alarm at an exact time in the future, such as for an alarm clock or calendar app.
+
+#10. Write Settings
+Allows an app to write (or read) Android system settings.
+
+#11. Accessibility Service
+Controls permission for an app to interact with the device UI, for example to act on behalf of a disabled user.
+
 ```
 
 This wrapper will use the EMDK with MX's AccessMgr feature to grant, deny or verify (WIP) critical permissions.
@@ -192,6 +205,10 @@ EPermissionType.GET_APP_OPS_STATS
 EPermissionType.BATTERY_STATS
 EPermissionType.MANAGE_EXTERNAL_STORAGE
 EPermissionType.ALL_DANGEROUS_PERMISSIONS
+EPermissionType.ACCESS_RX_LOGGER
+EPermissionType.SCHEDULE_EXACT_ALARM
+EPermissionType.WRITE_SETTINGS
+EPermissionType.ACCESSIBILITY_SERVICE
 ```
 
 Snippet code to grant a permission:

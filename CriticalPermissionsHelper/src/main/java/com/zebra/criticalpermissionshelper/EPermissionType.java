@@ -13,7 +13,8 @@ public enum EPermissionType
     ALL_DANGEROUS_PERMISSIONS(      "ALL_DANGEROUS_PERMISSIONS"                         ),
     ACCESS_RX_LOGGER(               "com.zebra.permission.ACCESS_RXLOGGER"              ),
     SCHEDULE_EXACT_ALARM(           "android.permission.SCHEDULE_EXACT_ALARM"           ),
-    WRITE_SETTINGS(                 "android.permission.WRITE_SETTINGS"                 );
+    WRITE_SETTINGS(                 "android.permission.WRITE_SETTINGS"                 ),
+    ACCESSIBILITY_SERVICE(          "ACCESSIBILITY_SERVICE_ACCESS"                      );
 
     String stringContent = "";
     EPermissionType(String stringContent)
@@ -54,6 +55,8 @@ public enum EPermissionType
                 return SCHEDULE_EXACT_ALARM;
             case "android.permission.WRITE_SETTINGS":
                 return WRITE_SETTINGS;
+            case "ACCESSIBILITY_SERVICE_ACCESS":
+                return ACCESSIBILITY_SERVICE;
             default:
                 return null;
         }
