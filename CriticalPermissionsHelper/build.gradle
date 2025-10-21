@@ -4,7 +4,7 @@ plugins {
 ext {
     PUBLISH_GROUP_ID = 'com.zebra.criticalpermissionshelper'
     PUBLISH_ARTIFACT_ID = 'criticalpermissionshelper'
-    PUBLISH_VERSION = '1.15.2'
+    PUBLISH_VERSION = '1.15.3'
 }
 
 android {
@@ -15,7 +15,7 @@ android {
         minSdkVersion 30
         targetSdkVersion 35
         versionCode 17
-        versionName "1.15.2"
+        versionName "1.15.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -53,7 +53,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = 'com.zebra.criticalpermissionshelper'
                 artifactId = 'criticalpermissionshelper'
-                version = '1.15.2'
+                version = '1.15.3'
 
                 afterEvaluate {
                     from components.findByName('release')

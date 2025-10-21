@@ -205,11 +205,48 @@ public class CriticalPermissionsHelper {
             // Get the certificate as a base64 string
             String encoded = Base64.getEncoder().encodeToString(rawCert);
 
+            // Depending on the permission, we need to specify a version of the CSP AccessMgr
+            String accessMgrVersion = "10.0";
+            switch(permissionType)
+            {
+                case ACCESS_NOTIFICATIONS:
+                case PACKAGE_USAGE_STATS:
+                case SYSTEM_ALERT_WINDOW:
+                case GET_APP_OPS_STATS:
+                case BATTERY_STATS:
+                    accessMgrVersion = "10.0";
+                    break;
+                case MANAGE_EXTERNAL_STORAGE:
+                    accessMgrVersion = "10.4";
+                    break;
+                case BIND_NOTIFICATION_LISTENER:
+                    accessMgrVersion = "11.5";
+                    break;
+                case READ_LOGS:
+                    accessMgrVersion = "11.9";
+                    break;
+                case ALL_DANGEROUS_PERMISSIONS:
+                    accessMgrVersion = "13.1";
+                    break;
+                case ACCESS_RX_LOGGER:
+                    accessMgrVersion = "14.1";
+                    break;
+                case SCHEDULE_EXACT_ALARM:
+                case WRITE_SETTINGS:
+                    accessMgrVersion = "14.2";
+                    break;
+                case ACCESSIBILITY_SERVICE:
+                    accessMgrVersion = "15.0";
+                    break;
+                default:
+                    accessMgrVersion = "10.0";
+            }
+
             profileData =
                     "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                             "<characteristic type=\"Profile\">\n" +
                             "<parm name=\"ProfileName\" value=\"" + profileName + "\"/>\n" +
-                            "<characteristic type=\"AccessMgr\" version=\"11.3\">\n" +
+                            "<characteristic type=\"AccessMgr\" version=\""+ accessMgrVersion + "\">\n" +
                             "<parm name=\"PermissionAccessAction\" value=\"" + permissionAccessAction.toString() + "\" />\n" +
                             "<parm name=\"PermissionAccessPackageName\" value=\"" + context.getPackageName() + "\" />\n" +
                             ((applicationClassName != null && applicationClassName.isEmpty() == false) ? "<parm name=\"ApplicationClassName\" value=\""+ applicationClassName +"\" />" : "") +
